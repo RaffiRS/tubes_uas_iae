@@ -1,0 +1,27 @@
+type OrderItem {
+  product_id: ID!
+  product_name: String!
+  price: Float!
+  qty: Int!
+  subtotal: Float!
+}
+
+type Order {
+  id: ID!
+  user_name: String!
+  user_email: String!
+  status: String!
+  total: Float!
+  items: [OrderItem!]!
+}
+
+type Query {
+  myOrders: [Order!]!
+  orderById(id: ID!): Order
+}
+
+type Mutation {
+  createOrder(productId: ID!, qty: Int!): Order
+  updateOrderStatus(id: ID!, status: String!): Order
+  deleteOrder(id: ID!): Boolean
+}

@@ -1,0 +1,80 @@
+services:
+
+  # ================= USER SERVICE =================
+  user-db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: user_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - ./user-service/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  user-service:
+    build: ./user-service
+    ports:
+      - "4001:4001"
+    env_file:
+      - ./user-service/.env
+    depends_on:
+      - user-db
+
+
+  # ================= PRODUCT SERVICE =================
+  product-db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: product_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - ./product-service/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  product-service:
+    build: ./product-service
+    ports:
+      - "4002:4002"
+    env_file:
+      - ./product-service/.env
+    depends_on:
+      - product-db
+
+
+  # ================= ORDER SERVICE =================
+  order-db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: order_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - ./order-service/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  order-service:
+    build: ./order-service
+    ports:
+      - "4003:4003"
+    env_file:
+      - ./order-service/.env
+    depends_on:
+      - order-db
+
+
+  # ================= SHIPPING SERVICE =================
+  shipping-db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: shipping_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - ./shipping-service/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  shipping-service:
+    build: ./shipping-service
+    ports:
+      - "4004:4004"
+    env_file:
+      - ./shipping-service/.env
+    depends_on:
+      - shipping-db

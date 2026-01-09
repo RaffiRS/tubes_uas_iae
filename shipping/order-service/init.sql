@@ -1,0 +1,19 @@
+CREATE TABLE IF NOT EXISTS orders (
+  id SERIAL PRIMARY KEY,
+  user_id INT NOT NULL,
+  user_name VARCHAR(150) NOT NULL,
+  user_email VARCHAR(150) NOT NULL,
+  status VARCHAR(50) DEFAULT 'PENDING',
+  total NUMERIC(14,2) DEFAULT 0,
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+CREATE TABLE IF NOT EXISTS order_items (
+  id SERIAL PRIMARY KEY,
+  order_id INT NOT NULL,
+  product_id INT NOT NULL,
+  product_name VARCHAR(200) NOT NULL,
+  price NUMERIC(12,2) NOT NULL,
+  qty INT NOT NULL,
+  subtotal NUMERIC(14,2) NOT NULL
+);

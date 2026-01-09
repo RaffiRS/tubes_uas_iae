@@ -1,0 +1,37 @@
+type Shipping {
+  id: ID!
+  order_id: ID!
+  courier: String
+  tracking_no: String
+  status: String
+  estimated_delivery: String
+}
+
+type ShippingLog {
+  prev_status: String
+  new_status: String
+  note: String
+  created_at: String
+}
+
+type Query {
+  shippingByOrder(order_id: ID!): Shipping
+  shippingLogs(shipping_id: ID!): [ShippingLog!]!
+}
+
+type Mutation {
+  createShipping(
+    order_id: ID!
+    courier: String!
+    tracking_no: String!
+    estimated_delivery: String!
+  ): Shipping
+
+  updateShippingStatus(
+    shipping_id: ID!
+    status: String!
+    note: String
+  ): Shipping
+
+  deleteShipping(shipping_id: ID!): Boolean
+}
